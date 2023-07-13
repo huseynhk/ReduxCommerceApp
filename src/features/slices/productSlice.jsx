@@ -9,7 +9,11 @@ export const productsSlice = createSlice({
     filteredProducts:
     JSON.parse(localStorage.getItem("filteredData")) || storeData,
 
+    singleProduct:
+    JSON.parse(localStorage.getItem("singleProduct")) || storeData,
+    error: false,
     },
+
 
     reducers:{
         filterProducts(state, action){
@@ -26,9 +30,22 @@ export const productsSlice = createSlice({
                 return err;
               }
         },
+
+        singleProduct(state, action) {
+          try {
+            const oneProduct = state.filteredProducts.filter(
+              (product) => product.id === action.payload
+            );
+            state.singleProduct = oneProduct;
+            const savedState = JSON.stringify(oneProduct);
+            localStorage.setItem("singleProduct", savedState);
+            // console.log(oneProduct)
+          } catch (err) {
+            return err;
+          }
+        },
     }
   
 })
-
-export const { filterProducts } = productsSlice.actions;
+export const { filterProducts , singleProduct } = productsSlice.actions;
 export default productsSlice.reducer;
