@@ -31,9 +31,6 @@ const NavBar = () => {
         </div>
 
         <div className="flex flex-row items-center">
-          <button className="text-black font-inter text-medium font-bold mr-4">
-            Logout
-          </button>
 
           <div className="flex flex-row items-center">
             <svg
