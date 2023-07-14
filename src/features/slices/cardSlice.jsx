@@ -45,10 +45,42 @@ export const cardSlice = createSlice({
               return err;
             }
           },
+
+      
+          removeFromCart(state, action) {
+            const productId = action.payload;
+            try {
+              const exist = state.card.find(
+                (product) =>
+                  product.id === productId.id &&
+                  product.size === productId.size &&
+                  product.color === productId.color
+              );
+              if (exist.amount === 1) {
+                state.card = state.card.filter(
+                  (product) =>
+                    product.id !== productId.id ||
+                    product.size !== productId.size ||
+                    product.color !== productId.color
+                );
+                state.totalAmount--;
+                state.totalPrice -= productId.price;
+              } else {
+                exist.amount--;
+                exist.totalPrice -= productId.price;
+                state.totalAmount--;
+                state.totalPrice -= productId.price;
+              }
+            } catch (err) {
+              return err;
+            }
+          },
+
+
     }
 })
 
 
 
-export const { addToCard } = cardSlice.actions;
+export const { addToCard , removeFromCart } = cardSlice.actions;
 export default cardSlice.reducer;

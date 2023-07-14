@@ -4,24 +4,26 @@ import "./App.css";
 import Main from "./Components/Main/Main";
 import FilteredProducts from "./Components/FilteredProducts/FilteredProducts";
 import SingleProduct from "./Components/FilteredProducts/SingleProduct";
+import Login from "./Components/Login/Login";
 import { useSelector } from "react-redux";
 
 
 function App() {
-  const card = useSelector((state) => state.card.card);
-  const totalAmouth = useSelector((state) => state.card.totalAmount);
-  const totalPrice = useSelector((state) => state.card.totalPrice);
 
-  console.log( "card", card)
-  console.log( "totalAmouth",totalAmouth)
-  console.log( "totalPrice",totalPrice)
+  const user = useSelector((state) => state.user.user);
+  const { authUser } = user;
+  console.log('user' , user)
+  console.log('authUser' , authUser)
 
 
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Main></Main>}></Route>
+        <Route
+            path="/"
+            element={authUser ? <Main></Main> : <Login></Login>}
+          ></Route>
 
           <Route
             path="/filteredProducts/:type"
